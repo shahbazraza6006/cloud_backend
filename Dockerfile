@@ -1,21 +1,29 @@
-# Use a newer Node.js version
-FROM node:16
+# Specify the base image
+FROM node:14-alpine
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
 # Copy package.json and package-lock.json
-COPY package.json ./
-COPY package-lock.json ./
+COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Bundle app source
+# Copy the entire project
 COPY . .
 
-# Expose port
-EXPOSE 4000
+# Build the React app
+RUN npm run build
 
-# Define the command to run your app
-CMD [ "npm", "start" ]
+# Specify the base image for the production environment
+FROM nginx:alpine
+
+# Copy the built React app to the nginx public directory
+COPY --from=0 /app/build /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start nginx service
+CMD ["nginx", "-g", "daemon off;"]

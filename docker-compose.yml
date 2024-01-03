@@ -1,0 +1,10 @@
+version: '3'
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - ATLAS_URI=mongodb+srv://evolve:1234@cluster0.nagoh6u.mongodb.net/?retryWrites=true&w=majority
