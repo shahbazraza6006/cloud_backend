@@ -42,7 +42,7 @@ jobs:
           application_name: backend_app
           environment_name: Backendapp-env 
           existing_bucket_name: elasticbeanstalk-us-east-1-461130657437
-          use_existing_version_if_available: true
+          use_existing_version_if_available: false
           version_label: ${{ github.sha }}
           deployment_package: deploy.zip
           
